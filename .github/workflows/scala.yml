@@ -24,8 +24,15 @@ jobs:
         cache: 'sbt'
     - name: Install Clang
       uses: egor-tensin/setup-clang@v1
+    - name: Install s2n
+      run: ./.github/scripts/install-s2n.sh
     - name: Build native binary
       run: sbt nativeLink
+    - name: Upload target directories
+      uses: actions/upload-artifact@v3
+      with:
+        name: fortify-bin
+        path: target/*/fortify-out
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
     - name: Upload dependency graph
       uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
